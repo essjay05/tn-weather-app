@@ -1,0 +1,11 @@
+.location-pg-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.curr-weather-condition {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

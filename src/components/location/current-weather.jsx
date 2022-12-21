@@ -1,51 +1,26 @@
 import { useEffect, useState } from 'react'
+import WeatherCondition from '../weather-condition/weather-condition'
 
-const CurrentWeather = ({ locationId }) => {
+const CurrentWeather = ({ loading, currentWeather }) => {
 
-  const [loading, setIsLoading] = useState(true)
-  const [weatherNow, setWeatherNow] = useState({
-    locationName: null,
-    locationRegion: null,
-    locationCountry: null,
-    locationLocalTime: null,
-    currentTempC: null,
-    currentTempF: null,
-    currentCloud: null
-  })
+  const { temp_f, precip_in,  feelslike_f, last_updated, cloud } = {...currentWeather}
+  const { icon, text } = {...currentWeather.condition}
 
- const { locationName, locationRegion, locationCountry, locationLocalTime, currentTempC, currentTempF, currentCloud } = weatherNow
-
-  const fetchCurrentWeather = (searchTerm) => {
-    fetch(`http://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_TN_WEATHER_APP_KEY}&q=${searchTerm}`)
-      .then((response) => response.json())
-      .then((weather) => setWeatherNow({
-        locationName: weather.location.name,
-        locationRegion: weather.location.region,
-        locationCountry: weather.location.country,
-        locationLocalTime: weather.location.localtime,
-        currentTempC: weather.current.temp_c,
-        currentTempF: weather.current.temp_f,
-        currentCloud: weather.current.cloud
-      }))
-      .then(() => setIsLoading(false))
-      .catch((err) => console.error(err))
-  }
-
-  useEffect(() => {
-    fetchCurrentWeather(locationId)
-  }, [])
+  console.log('currentWeather')
+  console.log(currentWeather)
 
   return (
-    <div className='current-weather-container'>
+    <div className='current-weather-container mx-auto'>
       <h2>CurrentWeather</h2>
       {loading && <h3>Loading...</h3>}
-      {(!loading && weatherNow) && 
+      {(!loading && currentWeather) && 
         <div className='current-weather-detail'>
-          <h4>{locationName}, {locationRegion}, {locationCountry}</h4>
-          <p>{locationLocalTime}</p>
+          <p>Last updated: <em>{last_updated}</em></p>
+          <WeatherCondition icon={icon} text={text} temp={temp_f}/>
           <ul>
-            <li>{currentTempC} degrees Celsius / {currentTempF} degrees Fahrenheit</li>
-            <li>{currentCloud}% clouds</li>
+            {precip_in > 0 && <li>Inches of precipitation: {precip_in}"</li>}
+            <li>Feels like: {feelslike_f}&deg;F</li>
+            <li>{cloud}% clouds</li>
           </ul>
         </div>}
     </div>

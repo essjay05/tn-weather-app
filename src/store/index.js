@@ -1,6 +1,7 @@
 import { legacy_createStore } from 'redux'
 
 const reducerFn = (state = {
+  forecastedDays: 5,
   searchTerm: '95116',
   faveCities: []
 }, action) => {
