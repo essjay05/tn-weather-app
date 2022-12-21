@@ -11,7 +11,6 @@ export function Location({ locationName, pageTitle, loading }) {
     <div>
       <header className='App-header'>
         <h1>Trusted Nurses Weather App: Location</h1>
-        <h2>{locUrl.id}</h2>
       </header>
       <main>
         <Forecast locationId={locUrl.id} />

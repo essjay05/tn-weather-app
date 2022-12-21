@@ -7,8 +7,7 @@ import { Location } from './pages/Location'
 import { Favorites } from './pages/Favorites';
 
 import './App.css'
-// import CardList from './components/card-list/card-list.component';
-// import SearchBox from './components/search-box/search-box.component';
+import NavBar from './components/navBar/navBar.component';
 
 function App() {
 
@@ -68,27 +67,8 @@ function App() {
   }
 
   return (
-    // <div className='App'>
-    //   <header className='App-header'>
-    //     <h1>Trusted Nurses Weather App</h1>
-    //   </header>
-    //   <SearchBox
-    //     className={`location-search-term`}
-    //     placeholder={`Search by Location`}
-    //     onChangeHandler={onSearchChange}
-    //     name={`searchTerm`}
-    //     btnText={`Search Term`}
-    //     onBtnClick={handleSearchClick}/>
-    //   {loading && <h3>Loading...</h3>}
-    //   {!loading && <CardList locations={locationResults}/>}
-    // </div>
     <>
-      <nav>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/favorites">Favorites</Link></li>
-        </ul>
-      </nav>
+      <NavBar/>
       <Routes>
         <Route path='/' element={
           <Home 
