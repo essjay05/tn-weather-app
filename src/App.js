@@ -1,25 +1,30 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, Routes, Route } from 'react-router-dom'
 
 import { Home } from './pages/Home'
-import { History } from './pages/History'
 import { Location } from './pages/Location'
+import { Favorites } from './pages/Favorites';
 
-import './App.css';
-import CardList from './components/card-list/card-list.component';
-import SearchBox from './components/search-box/search-box.component';
+import './App.css'
+// import CardList from './components/card-list/card-list.component';
+// import SearchBox from './components/search-box/search-box.component';
 
 function App() {
 
   const defaultLocationString = '95116'
 
   const [loading, setIsLoading] = useState(true)
-  const [locationResults, setLocationResults] = useState([])
   const [searchTerm, setSearchTerm] = useState(defaultLocationString)
-  
+  const [locationResults, setLocationResults] = useState([])
+  const locations = useSelector((state) => state.locations)
+  const dispatch = useDispatch()
+
+
+
   useEffect(() => {
     fetchSearchTermLocationWeather()
-  }, [locationResults])
+  }, [])
 
   const onSearchChange = (event) => {
     const searchTermString = event.target.value.toLowerCase()
@@ -63,20 +68,40 @@ function App() {
   }
 
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <h1>Trusted Nurses Weather App</h1>
-      </header>
-      <SearchBox
-        className={`location-search-term`}
-        placeholder={`Search by Location`}
-        onChangeHandler={onSearchChange}
-        name={`searchTerm`}
-        btnText={`Search Term`}
-        onBtnClick={handleSearchClick}/>
-      {loading && <h3>Loading...</h3>}
-      {!loading && <CardList locations={locationResults}/>}
-    </div>
+    // <div className='App'>
+    //   <header className='App-header'>
+    //     <h1>Trusted Nurses Weather App</h1>
+    //   </header>
+    //   <SearchBox
+    //     className={`location-search-term`}
+    //     placeholder={`Search by Location`}
+    //     onChangeHandler={onSearchChange}
+    //     name={`searchTerm`}
+    //     btnText={`Search Term`}
+    //     onBtnClick={handleSearchClick}/>
+    //   {loading && <h3>Loading...</h3>}
+    //   {!loading && <CardList locations={locationResults}/>}
+    // </div>
+    <>
+      <nav>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/favorites">Favorites</Link></li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path='/' element={
+          <Home 
+            locationResults={locationResults} 
+            loading={loading} 
+            onSearchChange={onSearchChange} 
+            handleSearchClick={handleSearchClick}
+            searchTerm={searchTerm}/>
+        }/>
+        <Route path={`/locations/:id`} element={<Location />}/>
+        <Route path='/favorites' element={<Favorites />}/>
+      </Routes>
+    </>
   );
 }
 

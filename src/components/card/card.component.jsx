@@ -1,13 +1,15 @@
 import './card.styles.css'
+import { Link } from 'react-router-dom'
 
-const Card = ({ id, title, className, link }) => {
+const Card = ({ id, title, className, link, detail }) => {
   return (
     <div
       key={id}
       className={className}>
-      <a href={link}>
+      <Link to={link}>
         <h3>{title}</h3>
-      </a>
+      </Link>
+      {detail && <p>{detail}</p>}
     </div>
   )
 }
