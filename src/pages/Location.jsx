@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom"
-import Forecast from "../components/location/foreast.component"
-import LocationHistory from "../components/location/location-history.component"
-import CurrentWeather from "../components/location/current-weather.component"
+import Forecast from "../components/location/forecast.component"
+import LocationHistory from "../components/location/location-history"
+import CurrentWeather from "../components/location/current-weather"
 
-export function Location({ locationName, pageTitle, loading }) {
+export function Location() {
   
   const locUrl = useParams()
   
@@ -13,8 +13,10 @@ export function Location({ locationName, pageTitle, loading }) {
         <h1>Trusted Nurses Weather App: Location</h1>
       </header>
       <main>
-        <Forecast locationId={locUrl.id} />
         <CurrentWeather locationId={locUrl.id} />
+        <hr/>
+        <Forecast locationId={locUrl.id} />
+        <hr/>
         <LocationHistory locationId={locUrl.id} />
       </main>
     </div>

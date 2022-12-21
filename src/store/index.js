@@ -1,10 +1,8 @@
 import { legacy_createStore } from 'redux'
 
 const reducerFn = (state = {
-  loading: true,
-  locations: [],
-  searchTerm: '',
-  favorites: []
+  searchTerm: '95116',
+  faveCities: []
 }, action) => {
   return state
 }

@@ -1,11 +1,60 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import CardList from '../components/card-list/card-list.component'
-import SearchBox from '../components/search-box/search-box.component'
+import CardList from '../components/card-list/card-list'
+import SearchBox from '../components/search-box/search-box'
 
-export function Home({ locationResults, loading, searchTerm, onSearchChange, handleSearchClick }) {
+export function Home() {
 
-  // const [loading, setIsLoading] = useState(true)
+  const defaultLocationString = '95116'
+
+  const [loading, setIsLoading] = useState(true)
+  const [searchTerm, setSearchTerm] = useState(defaultLocationString)
+  const [locationResults, setLocationResults] = useState([])
+  
+  useEffect(() => {
+    fetchSearchTermLocationWeather()
+  }, [])
+
+  const fetchSearchTermLocationWeather = () => {
+    fetch(`http://api.weatherapi.com/v1/search.json?key=${process.env.REACT_APP_TN_WEATHER_APP_KEY}&q=${searchTerm}`)
+      .then((response) => response.json())
+      .then((locations) => setLocationResults(locations))
+      .then(() => setIsLoading(false))
+      .catch((err) => console.error(err))
+  }
+
+  const onSearchChange = (event) => {
+    const searchTermString = event.target.value.toLowerCase()
+    if (searchTermString) {
+      setSearchTerm(searchTermString)
+    } else {
+      setSearchTerm(defaultLocationString)
+    }
+  }
+
+  const handleSearchClick = async () => {
+    setIsLoading(true)
+    try {
+      const response = await fetch(`http://api.weatherapi.com/v1/search.json?key=${process.env.REACT_APP_TN_WEATHER_APP_KEY}&q=${searchTerm}`, {
+        method: 'GET',
+        headers: {
+          ACCEPT: 'application/json'
+        }
+      })
+
+      if (!response.ok) { throw new Error(`Error! status: ${response.status}`) }
+   
+      const result = await response.json()
+      console.log(`result is: ${JSON.stringify(result, null, 4)}`)
+    
+      setLocationResults(result)
+    } catch (err) {
+      console.error(err.message)
+    } finally {
+      setIsLoading(false)
+    }
+
+  }
 
   return (
     <>
@@ -23,7 +72,8 @@ export function Home({ locationResults, loading, searchTerm, onSearchChange, han
         searchTerm={searchTerm}/>
         <CardList 
           loading={loading}
-          locations={locationResults} />
+          locations={locationResults}
+          favBtn={true} />
       </main>
     </>
   )

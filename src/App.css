@@ -1,4 +1,25 @@
+:root {
+  --black-color: #2d3436;
+  --dark-grey-color: #636e72;
+  --light-grey-color: #dfe6e9;
+  --white-color: #ffffff;
+  --red-color: #d63031;
+  --yellow-color: #fdcb6e;
+  --green-color: #00b894;
+  --blue-color: #0984e3;
+}
+
 .App {
   text-align: center;
+}
+
+/* Icons */
+.clickable-icon {
+  font-size: 2rem;
+  color: var(--black-color);
+}
+
+.clickable-icon:hover, .clickable-icon:focus {
+  cursor: pointer;
 }
 

@@ -1,7 +1,7 @@
 import './card-list.styles.css'
-import Card from '../card/card.component'
+import Card from '../card/card'
 
-const CardList = ({ loading, locations }) => {
+const CardList = ({ loading, locations, favBtn }) => {
   return (
     <div className='card-list-conatiner'>
       <h2>CardList</h2>
@@ -14,7 +14,9 @@ const CardList = ({ loading, locations }) => {
                 key={id}
                 className={'location-container'}
                 title={`${name}, ${region}, ${country}`}
-                link={`/locations/${url}`}/>
+                link={`/locations/${url}`}
+                favBtn={favBtn}
+                id={id}/>
             )
           })
         }
