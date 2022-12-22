@@ -2,6 +2,16 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Running locally:
+
+### Clone the repository:
+
+### `git@github.com:essjay05/tn-weather-app.git`
+
+In the project directory install the packages by running:
+
+### `npm install`
+
 ## Available Scripts
 
 In the project directory, you can run:
